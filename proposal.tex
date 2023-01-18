@@ -1,0 +1,66 @@
+% Author: Pavel Semenov
+% Date: 06.01.2023
+
+\documentclass{article}
+\usepackage{array}
+\usepackage{longtable}
+\usepackage{float}
+\title{Project proposal}
+\author{Pavel Semenov}
+\date{06.01.2023}
+\begin{document}
+\maketitle
+
+\section*{What is the problem?}
+
+I am currently employed at the IBM as a DevOps engineer. I have almost no project management responsibilities, but
+I am sometimes asked by project manager to give an estimation of time required to complete the task. It is always
+very difficult for me to give an accurate estimate. Thus, I would like to produce a model, which might be able to
+approximate the time needed for the task to be finished. I am not sure there is a strong correlation between the
+task parameters and the resolution time, but I am willing to discover it if it exists. We'll see.
+
+\section*{What is my dataset?}
+
+I have a collection of all resolved tasks from one of the IBM projects, which have non-zero time spent parameter.
+I have exported it as an XML with \textbf{28791} work items. Each work item has the following parameters:
+
+\begin{center}
+\begin{longtable}[H]{ | m{5em} | m{10em}| m{20em} | }  
+    \hline
+    Name & Description & Example \\
+    \hline\hline
+    timeSpent & The time spent on the task in milliseconds & 144000000 \\
+    \hline
+    summary & Short summary of the work item & FST-4320 - Falscher Ablauf beim Versand XJustiz Nachricht nachricht.vag.fehler Version 3.3.x mit dem gültigem Signaturstatus, mit fehlerhafte Schematronprüfung, mit erfolgreiche Plausibiltitätsprüfung \\
+    \hline
+    description & Multiline description of the work item & Falscher Ablauf beim Versand XJustiz Nachricht nachricht.vag.fehler Version 3.3.x mit dem gültigem Signaturstatus, mit fehlerhafte Schematronprüfung, mit erfolgreiche Plausibiltitätsprüfung
+
+    Es existiert ein FAM VA Verfahren mit Auskunftsersuchen. Eine XJustiz Nachricht nachricht.vag.fehler Version 3.3.1 mit Signaturstatus unknown, mit fehlerhafte Schematronprüfung und erfolgreiche Plausibilitätsprüfung wurde an Postfach gesendet.  
+    Es läuft der AF002 Normalablauf (Schritte 1-9). Im Schritt 10. stellt System fest, dass Regelverstöße bei der Schematronprüfung vorliegen. 
+    
+    FEHLER
+    IST: Aus dem Verfahren wurde die XJustiz Nachricht nachricht.vag.fehler gesendet und die eingehende XJustiz Nachricht nachricht.vag.fehler landete im Verfahren. 
+    SOLL: Es läuft der AF002 Normalablauf (Schritte 1-9). Im Schritt 10. stellt System fest, dass Regelverstöße bei der Schematronprüfung vorliegen und läuft den alternativen Ablauf AF10a erfolgreich weiter.  
+    Es wird eine Rückmeldung, XJustiz Nachricht nachricht.vag.fehler Version 3.3.1 mit Verarbeitungsergebnis: FE00110 Beim Validieren gegen das Schema ist ein Fehler aufgetreten! Details: "Fehlermeldung aus Parser".) erstellt und versendet. Das System führt die Aktivität "067\_Nachricht aus Zwischenspeicher loeschen" ("Nachrichtentyp") für die eingegangene Nachricht aus. Die eingehende XJustiz Nachricht wird nichts in Verfahren gespeichert, sondern wird gelöscht. 
+    
+     \\
+    \hline
+    priority & Priority assigned to the work item. Ranged from 1 to 5 & Prio 2 \\
+    \hline
+    severity & The severity of the work item. Either Blocker or Normal & Blocker \\
+    \hline
+    category & Category of the work item. Might be Release-Test, KM (KonfigurationManagement), Maintenance, etc. (fixed collection of values) & Release-Test \\
+    \hline
+    type & Type of the work item. Internal Defect/Issue/Action/etc. (fixed collection of values) & Issue \\
+    \hline
+\end{longtable}
+\end{center}
+
+\section*{What is my plan?}
+I haven't given this part a lot of though yet. However, I can think of a few steps.
+Firstly, I would need use some NLP technique (Word2Vec?) to transform the text into vector. Then, I can use it along
+with other parameters as an input to my Neural Network. Lastly, I would play with its parameters to get the best results.
+I would greatly appreciate your feedback on this proposal and plan in particular, because my ML knowledge is not sufficient
+eough to say if this can be done the proposed way.
+
+\end{document}
